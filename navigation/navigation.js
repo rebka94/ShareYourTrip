@@ -1,46 +1,29 @@
 import React from 'react'
 import {Alert, Platform} from "react-native" 
-import {createStackNavigator} from '@react-navigation/stack'
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator,} from '@react-navigation/material-top-tabs';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
 import WelcomeScreen from '../Components/Welcomescreen'
-import EscaleNumbreScreen from "../Components/EscalesScreens/EscaleNumbreScreen"
 
 import HomeScreen from "../Components/HomeScreen"
 import LoginScreen from "../Components/LoginScreen"
 import RegisterScreen from "../Components/RegisterScreen"
 import LoadingScreen from "../Components/LoadingScreen"
 import ProfileScreen from "../Components/ProfileScreen"
-import ChatRoom from "../Components/ChatRoom"
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import NotificationScreen from "../Components/NotificationScreen"
 import TripList from "../Components/TripList"
-import Syt from "../Components/SYT/Syt"
 import Fire from "../Fire/Fire"
 import SearchTrip from '../Components/SYT/SearchTrip'
 import PublicProfile from '../Components/PublicProfile'
-import Friends from '../Components/Friends'
 import ChatScreen from "../Components/ChatScreen"
-import LikesAndComments from "../Components/notificationScreens/LikesAndComments"
-import FriendRequests from "../Components/notificationScreens/FriendRequests"
-import LocationForSearch from "../Components/SYT/LocationForSearch"
-
-import LocationForPropose from "../Components/SYT/LocationForPropose"
-import DateComponent from '../Components/SYT/DateComponent';
-import EscaleScreen from '../Components/EscalesScreens/EscaleScreen';
-import SearchSyt from '../Components/SearchSYT/SearchSytFrom';
-import SearchSytFrom from '../Components/SearchSYT/SearchSytFrom';
-import SearchSytTo from '../Components/SearchSYT/SearchSytTo';
-import DepartureDate from '../Components/SytDate/DepartureDate';
-import ArrivalDate from '../Components/SytDate/ArrivalDate';
-import SettingProfile from '../Components/Profile/SettingProfile';
-
-
-
 import { FontAwesome } from '@expo/vector-icons';
-import EscaleForm from '../Components/EscalesScreens/EscaleForm';
-
+import ChatRoom from '../Components/notificationScreens/ChatRoom';
+import Notifications from '../Components/notificationScreens/Notifications';
+import Test1 from "../Components/Tests/Test1"
+const TransitionScreenOptions = {
+  ...TransitionPresets.SlideFromRightIOS, // This is where the transition happens
+};
 
 
  const handleLogOut = () => {
@@ -80,7 +63,7 @@ function AppTabNavigator() {
               }else if (route.name === 'Proposer') {
                 iconName = 'ios-add-circle' 
                 size = 40
-              } else if (route.name === 'Notifications') {
+              } else if (route.name === 'TabNotifications') {
                 iconName = 'ios-notifications' ;
                 size = 40
               }else if (route.name === 'Profile') {
@@ -131,8 +114,8 @@ function AppTabNavigator() {
 
             />
             <AppTab.Screen
-            name="Notifications"
-            component={NotificationScreen}
+            name="TabNotifications"
+            component={MyTopTabNotifications()}
             options={{
               tabBarBadge: 35,
               tabBarBadgeStyle: {
@@ -147,7 +130,7 @@ function AppTabNavigator() {
                
               }
             }}
-            />
+          />
             <AppTab.Screen
             name="Profile"
             component={ProfileScreen}
@@ -156,40 +139,27 @@ function AppTabNavigator() {
         </AppTab.Navigator>
     )
 }
+const TabTopNotifications = createMaterialTopTabNavigator();
+
+function MyTopTabNotifications() {
+  return (
+    <TabTopNotifications.Navigator>
+      <TabTopNotifications.Screen name="notifications" component={ChatRoom} />
+      <TabTopNotifications.Screen name="messages" component={Notifications} />
+    </TabTopNotifications.Navigator>
+  );
+}
 
 function AppStackNavigator() {
     return (
-        <AppStack.Navigator initialRouteName={"Loading"} options={{headerShown: false}}>
+        <AppStack.Navigator initialRouteName={"Loading"} options={{headerShown: false}}
+        screenOptions={TransitionScreenOptions}>
              <AppStack.Screen
                 name="Welcome"
                 component={WelcomeScreen}
                 options={{headerShown: false}}
             />
-            <AppStack.Screen
-                name="LocationForSearch"
-                component={LocationForSearch}
-                options={{headerShown: false}}
-            />
-            <AppStack.Screen
-                name="SettingProfile"
-                component={SettingProfile}
-                options={{headerShown: true, title:"mon profile", 
-                headerTintColor:"white",
-                headerStyle: {
-                  backgroundColor:"purple"
-                }
-              }}
-            />
-             <AppStack.Screen
-                name="DateComponent"
-                component={DateComponent}
-                options={{headerShown: false}}
-            />
-             <AppStack.Screen
-                name="LocationForPropose"
-                component={LocationForPropose}
-                options={{headerShown: false}}
-            />
+
             <AppStack.Screen
                 name="TAB"
                 children={AppTabNavigator}
@@ -202,44 +172,7 @@ function AppStackNavigator() {
                   backgroundColor:"purple"
                 }}}
             />
-                <AppStack.Screen
-                name="EscaleScreen"
-                component={EscaleScreen}
-                options={{headerShown: false
-                }}
-            />
-             <AppStack.Screen
-                name="EscaleNumbreScreen"
-                component={EscaleNumbreScreen}
-                options={{headerShown: false, headerTintColor:"white", headerStyle: {
-                  backgroundColor:"purple"
-                }}}
-            />
-            <AppStack.Screen
-                name="SearchSytFrom"
-                component={SearchSytFrom}
-                options={{headerShown: false, headerTintColor:"white", headerStyle: {
-                  backgroundColor:"purple"
-                }}}
-            />
-            <AppStack.Screen
-                name="SearchSytTo"
-                component={SearchSytTo}
-                options={{headerShown: false, headerTintColor:"white", headerStyle: {
-                  backgroundColor:"purple"
-                }}}
-            />
-            
-            <AppStack.Screen
-                name="DepartureDate"
-                component={DepartureDate}
-                options={{headerShown: false}}
-            />
-            <AppStack.Screen
-                name="ArrivalDate"
-                component={ArrivalDate}
-                options={{headerShown: false}}
-            />
+              
             
              <AppStack.Screen
                 name="ChatScreen"
@@ -253,6 +186,14 @@ function AppStackNavigator() {
 
                 }}
             />
+            <Stack.Screen
+              name="Test1"
+              component={Test1}
+              options={{
+                title: 'Test1',
+                ...TransitionPresets.ModalSlideFromBottomIOS,
+              }}
+              />;
             
             <AppStack.Screen
                 name="Register"
@@ -263,18 +204,6 @@ function AppStackNavigator() {
                 name="Loading"
                 component={LoadingScreen}
                 options={{headerShown: false}}
-            />
-        
-            
-              <AppStack.Screen
-                name="ChatRoom"
-                component={ChatRoom}
-                options={{headerShown: true}}
-            />
-            <AppStack.Screen
-                name="Friends"
-                component={Friends}
-                options={{headerShown: true, headerStyle: {backgroundColor:'#10BFC5'}, title:"Amis SYT"}}
             />
             <AppStack.Screen
                 name="PublicProfile"

@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 // create a component
-class FriendRequests extends React.Component{
+class Test1 extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>FriendRequests</Text>
+                <Text>Test1</Text>
             </View>
         );
     }
-};
+}
 
 // define your styles
 const styles = StyleSheet.create({
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default FriendRequests;
+export default Test1;

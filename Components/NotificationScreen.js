@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from 'react-native-reanimated';
 import  Notifications from './notificationScreens/Notifications';
 import ChatScreen from './ChatScreen';
-import ChatRoom from './ChatRoom';
+import ChatRoom from './notificationScreens/ChatRoom';
 import GestureRecognizer from 'react-native-swipe-gestures'
 
 
