@@ -1,0 +1,2 @@
+export const FEATCHING_PROFILE = "FEATCHING_PROFILE"
+export const GET_PROFILE = "GET_PROFILE"
