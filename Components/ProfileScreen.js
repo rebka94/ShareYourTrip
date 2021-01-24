@@ -19,26 +19,27 @@ class ProfileScreen extends React.Component{
           modalVisible: false
         }
         this._unsubscribe= null
+
     }
     
     
-     componentDidMount= ()=> {
-        const {navigation} = this.props
-        this._unsubscribe = navigation.addListener('focus', () => {
-            this.getData()
-            
-          });
+     componentDidMount= ()=> 
+     { const {navigation} = this.props
+     this._unsubscribe = navigation.addListener('focus', () => {
+         this.getData()
+         
+       });
     }
     getData = async() => {
         let data = await functions.getProfile()
         this.setState({user:data})
         console.log("profil récupérec")
     }
-   
     componentWillUnmount() {
         this._unsubscribe();
 
     }
+   
     handleLogOut() {
         Fire.shared.signOut()
         this.setState({user:{}, modalVisible:false})
@@ -182,17 +183,16 @@ class ProfileScreen extends React.Component{
        
                 <SafeAreaView style={styles.container}>
                     {this.displayModal()}
-                    <StatusBar backgroundColor="purple"/>
+                    <StatusBar barStyle="dark-content" backgroundColor="purple"/>
                 <View style={[styles.up_Screen, {}]}>
                     <View style={{flex:2/10, justifyContent:"center", alignSelf:"flex-end", marginRight:20, marginTop:15}}>
-                        <TouchableOpacity style={{}} onPress={()=>this.setState({modalVisible:true})}>
+                        <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate("Settings")}>
                         <Ionicons 
                         name= "ios-settings"
                         size={50}
                         color={"#4F566D"}
                         />
                         </TouchableOpacity>
-
                     </View>
                     <View style={{flex:8/10, justifyContent:"center", alignItems:"center"}}>
                         <View style={styles.avatar_container}>
@@ -201,7 +201,9 @@ class ProfileScreen extends React.Component{
                         <Text style={styles.name}>{this.state.user.userName}</Text> 
 
                     </View>
-                
+                    <TouchableOpacity style={{left:10, top:10, position:"absolute"}} onPress={()=>this.props.navigation.goBack()}>
+                            <MaterialIcons name="keyboard-arrow-down" size={50} color="grey" />
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.down_Screen}>
                     <View style={styles.data_stat}>
@@ -233,7 +235,7 @@ class ProfileScreen extends React.Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:"#EFECF4"
+
     },
     centeredView: {
         flex: 1,

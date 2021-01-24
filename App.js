@@ -7,6 +7,8 @@ import AppStackNavigator from './navigation/navigation'
 import {Ionicons} from '@expo/vector-icons'
 import {EscaleForm} from "./Components/EscalesScreens/EscaleForm"
 import SearchTrip from "./Components/SYT/SearchTrip"
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
 
 import { YellowBox } from "react-native";
 import _ from "lodash";
@@ -26,9 +28,12 @@ export default class App extends React.Component{
   render() {
       return (
         <Provider store={Store}>
+          <SafeAreaProvider>
            <NavigationContainer >
              <AppStackNavigator/>
            </NavigationContainer>
+          </SafeAreaProvider>
+         
         </Provider>
          
 
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#2c3e50',
+      backgroundColor: 'transparent',
   },
 });
 

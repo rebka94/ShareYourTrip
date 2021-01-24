@@ -1,43 +1,10 @@
 //import liraries
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, ActivityIndicator, SafeAreaView} from 'react-native';
-import Fire from "../Fire/Fire"
+import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, ActivityIndicator, SafeAreaView, StatusBar} from 'react-native';
+import Fire from "../../Fire/Fire"
 import { MaterialIcons } from '@expo/vector-icons';
 
-const data = [
-    {
-        uid: "1",
-        sentBy:"Yanis Selam",
-        text: "cc cv ?",
-        sentAt: 54574545455,
-        avatar: require("../assets/image1.jpg"),
-        image: require("../assets/image1.jpg"),
-        isRead:"false"
-    },
-    {
-        uid: "2",
-        sentBy:"alicia tut",
-        text: "tfk?",
-        sentAt: 54574545455,
-        avatar: require("../assets/image2.jpg"),
-        image: require("../assets/image2.jpg"),
-        isRead:"false"
-
-
-    },
-    {
-        uid: "3",
-        sentBy:"karim ti",
-        text: "allo tu veux quoi ?",
-        sentAt: 156910927,
-        avatar: require('../assets/image3.jpg'),
-        image: require('../assets/image3.jpg'),
-        isRead:"true"
-
-    },
-
-]
 class ChatRoom extends React.Component{
     constructor(props) {
         super(props)
@@ -83,7 +50,7 @@ class ChatRoom extends React.Component{
                         Vous n'avez aucun méssages
                     </Text>
                 </View>*/
-                <View style={{position:"absolute", alignSelf:"center", top:"50%"}}>
+                <View style={{position:"relative", alignSelf:"flex-start", top:"50%"}}>
                         <ActivityIndicator size="large" color="purple"></ActivityIndicator>
                     <Text style={{fontSize:17, fontWeight:"bold", marginTop:15, color:"purple"}}>{"Chargement des messages..."}</Text>
                 </View>
@@ -151,8 +118,12 @@ class ChatRoom extends React.Component{
         console.log("state",this.state.ListMessages)
         return (
             <SafeAreaView style={styles.container}>
-                {this.displayLoad()}
-                {this._render()}
+                <StatusBar barStyle="dark-content" backgroundColor="purple"/>
+                <View style={{flexDirection:"row", flex:1}}>
+                    {this.displayLoad()}
+                    {this._render()}
+                </View>
+               
             </SafeAreaView>
         )
     }
@@ -164,6 +135,9 @@ class ChatRoom extends React.Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:"#fff",
+        justifyContent:"center", 
+        alignItems:"center"
     },
     feed: {
         flex:1,

@@ -133,7 +133,7 @@ class SearchTrip extends Component {
                     style={[styles.image, {position: "absolute", bottom:20, right:0}]} 
                     source={require('../../assets/images/destination.png')}
                     />
-                    <View style={{position:"absolute", top:50, width:"100%", alignSelf:"center"}}>
+                    <View style={{position:"absolute", top:0, width:"100%", alignSelf:"center"}}>
                         <Text style={[styles.text_header, {marginLeft:15}]}>
                             {"Dites nous où voulez-vous aller ?"}
                             </Text>
