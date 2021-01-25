@@ -20,7 +20,7 @@ const CustomHeaderTab = props => {
                 <Ionicons name="ios-person" size={30} color="#fff" />    
             </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>props.navigation.navigate("ChatRoom")}>
+        <TouchableOpacity onPress={()=>props.navigation.navigate("ChatRoom", {cc: "cc"})}>
             <View style={[styles.button, {marginRight:15, flexDirection:"row"}]}>
                 <Feather name="message-circle" size={30} color="#fff" />
                 <View style={{height:20, width:20, 

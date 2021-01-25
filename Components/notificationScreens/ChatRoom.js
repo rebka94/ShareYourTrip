@@ -40,7 +40,6 @@ class ChatRoom extends React.Component{
     }
     
     _render() {
-        console.log("state\n",this.state.ListMessages )
 
         if (this.state.ListMessages.length==0) {
             return (

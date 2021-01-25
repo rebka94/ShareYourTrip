@@ -7,7 +7,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import {connect} from 'react-redux'
 import * as actions from '../../Store/actions/actionsTypes'
 import * as actionsFunction  from '../../Store/actions/actions'
-import DepartureDate from '../SytDate/DepartureDate';
 import DateTimeCustom from '../SytDate/DateTimeCustom';
 import SytLocationCustom from "../SytLocation/SytLocationCustom"
 import { Entypo } from '@expo/vector-icons';

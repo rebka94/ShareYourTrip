@@ -24,6 +24,8 @@ import { color } from 'react-native-reanimated';
 import { MaterialIcons } from '@expo/vector-icons';
 import BackArrow from './BackArrow';
 import Test1 from "../Components/Tests/Test1"
+import CustomHeaderChatScreen from './CustomHeaderChatScreen';
+import DateTimeModal from '../Components/SYT/DateTimeModal';
  const handleLogOut = () => {
   Alert.alert(
     'Deconnexion',
@@ -150,8 +152,6 @@ function SearchTripStack() {
        name="SearchTrip"
        component={SearchTrip}
        options={{headerShown: false}}
-
-       
    />
    </AppStack.Navigator>
 
@@ -166,6 +166,22 @@ function HomeStack() {
        options={{headerShown: false}}
 
    />
+    <AppStack.Screen
+                
+                name="DateTimeModal"
+                component={DateTimeModal}
+                options={({ navigation, route, }) => ({
+                  headerShown:false,
+                  ...TransitionPresets.ModalPresentationIOS,
+                  gestureEnabled:true,
+                  cardOverlayEnabled: true,
+                  headerStyle: {
+                    backgroundColor:"transparent"
+                  }, 
+                })}
+                
+                
+            />
    </AppStack.Navigator>
 
   )
@@ -234,7 +250,7 @@ function chatStack() {
                 
                 name="chatRoom"
                 component={ChatRoom}
-                options={({ navigation, route, }) => (
+                options={({ navigation, route }) => (
                   { 
                     headerShown: true,
                     headerTitle: "Messages",
@@ -263,14 +279,19 @@ function chatStack() {
                 
                 name="ChatScreen"
                 component={ChatScreen}
-                options={({ navigation, route, }) => ({
-                  headerShown:false,
+                options={({route, navigation}) => ({
+                  title:"",
+                  headerShown:true,
                   ...TransitionPresets.SlideFromRightIOS,
                   gestureEnabled:true,
                   cardOverlayEnabled: true,
                   headerStyle: {
-                    backgroundColor:"transparent"
+                    backgroundColor:"purple"
                   }, 
+                  headerLeft: (props) => (
+                    <CustomHeaderChatScreen {...route} {...navigation}/>)
+                  
+                  
                 })}
                 
                 

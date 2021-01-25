@@ -320,35 +320,24 @@ _scrollEnd = (evt) => {
   this.refs.flatList1.scrollToEnd(); 
   } 
   render() {
-    console.log(this.state.person)
 
     return (
 
 
-      <SafeAreaView style={{flex:1, backfaceVisibility:"purple"}}>
-        <View style={{height:70, backgroundColor:"purple", alignItems:"center", flexDirection:"row"}}>
+      <SafeAreaView style={{flex:1}}>
         <StatusBar barStyle="dark-content" backgroundColor="purple"/>
+        <Image source={require('../assets/images/chatting.png')} 
+        style={{position:"absolute", height:500, width:500, top:100, right:10}}/>
 
-          <View style={{flex:3/10,  backgroundColor:"purple"}}>
-          <Image source={{uri: this.state.person.avatar}}style={{height:50,alignSelf:"center", width:50, borderColor:"white", borderWidth:2, borderRadius:50/2}}/>
-          </View>
-                <View style={{flexDirection:"row", flex:7/10}}>
-                   <View style={{ flexDirection:"row"}}>
-                        <Text style={{fontSize:17, fontWeight:"bold", color:"white"}}>{this.state.person.name}</Text>
-                        <Text style={{fontSize:17, fontWeight:"bold", color:"white"}}>{this.state.person.firstName}</Text>
-                    </View>
-                </View>
-          </View>
+          
+          
     
         <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column',justifyContent: 'center',}}
          behavior={Platform.OS == "ios" ? "padding" : ""}enabled   
         >
            
 
-        <View style={{position:"absolute", height:300, width:400, borderRadius:400/2, backgroundColor:"#F2F3F4"}}></View>
-        <View style={{position:"absolute", height:70, width:100, borderRadius:100/2, backgroundColor:"#F2F3F4", left:50, bottom:250}}></View>
-        <View style={{position:"absolute", height:30, width:50, borderRadius:50/2, backgroundColor:"#F2F3F4", left:30, bottom:210}}></View>
-        <View style={{position:"absolute", height:15, width:35, borderRadius:35/2, backgroundColor:"#F2F3F4", left:20, bottom:180}}></View>
+     
         
         <AutoScrollFlatList 
                     style={styles.feed}
@@ -370,6 +359,7 @@ _scrollEnd = (evt) => {
         </TouchableOpacity>
         </View>
         </KeyboardAvoidingView>
+
 
       </SafeAreaView>
 
