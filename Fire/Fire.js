@@ -1,4 +1,5 @@
 import firebaseConfig from "../constants/ApiKeys"
+import * as func from "../helpers/functionsHelp"
 import * as firebase from "firebase"
 import "firebase/firestore"
 import Constants from "expo-constants"
@@ -14,22 +15,7 @@ class Fire {
             firebase.initializeApp(firebaseConfig)
         
     }
-    fetchMessages= async  ()=> {
-        const messages = await this.messageRef
-          .orderBy('created_at', 'desc')
-          .limit(10)
-          .get()
-    
-        return messages.docs
-      }
-      createMessage = async({ message, uid })=>  {
-        await this.messageRef.add({
-          message,
-          user_id: uid,
-          created_at: new Date()
-        })
-      }
-    
+  
     
   
     uploadImageAsync =  async (uri, filename)=> {
@@ -42,86 +28,7 @@ class Fire {
     
  
 
-    addFriendRequest =  (user) => {
-        try {
-                    let frsRef= this.fireStore.collection("notifications").doc(this.uid).collection('friends_request_send').doc(user.uid)
-                    let frrRef = this.fireStore.collection("notifications").doc(user.uid).collection('friends_request_receive').doc(this.uid)
-                    let userRef = this.fireStore.collection('users')
-                    userRef.doc(user.uid).onSnapshot( doc=> {
-                        frsRef.set({
-                            uid: user.uid,
-                            avatar: doc.data().avatar,
-                            userName: doc.data().userName
-                        })
-                    })
-                    userRef.doc(user.uid).onSnapshot( doc=> {
-                        frrRef.set({
-                            uid: this.uid,
-                            avatar: doc.data().avatar,
-                            userName: doc.data().userName
-                        })
-                    })
-        } catch (error) {
-            alert(error)
-        }
-    }
-    dellFriendRequest = (user) => {
-        let notRef = this.fireStore.collection("notifications")
-        let notRefReceive = notRef.doc(user.uid).collection('friends_request_receive').where('uid', '==', this.uid)
-        let notRefSend = notRef.doc(this.uid).collection('friends_request_send').where('uid', '==', user.uid)
-        notRefReceive.get().then(doc => {
-            doc.forEach(instance => {
-                instance.ref.delete().catch(console.log('probleme de supression'))  
-            })
-        })     
-        notRefSend.get.then(doc => {
-            doc.forEach(instance => {
-                instance.ref.delete().catch(console.log('probleme de supression'))
-            })
-
-        })     
-    }
-    addFriends = async (friend) => {
-        try {
-            let usersRef = this.fireStore.collection('users')
-            usersRef.doc(friend.uid).onSnapshot( doc => {
-                usersRef.doc(this.uid).collection('friends').add({
-                    uid: doc.data().uid,
-                    avatar:doc.data().avatar,
-                    userName:doc.data().userName
-                })
-                usersRef.doc(friend.uid).update({
-                    friends: doc.data().friends+1
-                })
-            })
-            usersRef.doc(this.uid).onSnapshot( doc => {
-                usersRef.doc(friend.uid).collection('friends').add({
-                    uid: doc.data().uid,
-                    avatar:doc.data().avatar,
-                    userName:doc.data().userName
-                })
-                usersRef.doc(this.uid).update({
-                    friends: doc.data().friends+1
-                })
-            })
-        } catch (error) {
-            alert(error)
-        }    
-    }     
-    delFriends = (friend) => {
-        try { 
-             this.fireStore.collection("users").doc(this.uid).collection("friends").where('uid', '==', friend.uid).onSnapshot( doc => {
-                if (!doc.empty) {
-                    doc.forEach(snapshot=> {
-                        snapshot.ref.delete()
-                    })
-                }
-            })
-        } catch (error) {
-            alert("Erreur", error)
-        }
-    }
-   
+    
    
 
    
@@ -140,20 +47,20 @@ class Fire {
                     console.log("error de création de compte", error)
                     alert(error)
                 })
-                let db = this.fireStore.collection("users").doc(this.uid);
-                db.set({
+                let ref = this.database.ref("users/"+this.uid)
+                const profil = {
                     uid: this.uid,
                     userName:user.userName,
                     email:user.email,
                     name: user.name,
                     firstName: user.firstName,
                     avatar: null,
-                    friends: 0,
-                    shareYourTrip: 0,
                     age: date.getFullYear()-user.age,
                     password: user.password,
-                    onLine:false,
-                }).catch(error => {
+                    friends:0
+
+                }
+                ref.set(profil).catch(error => {
                     console.log("erreur de saisie de données", error)
                 })
                 
@@ -162,7 +69,7 @@ class Fire {
                     alert(error)
                 })
                 console.log("remoteUtl", remoteUrl)
-                db.update({
+                ref.update({
                     avatar: remoteUrl
                 })
 
@@ -172,11 +79,12 @@ class Fire {
        
         
     }
+    
     get firebase() {
         return firebase;
     }
-    get fireStore() {
-        return firebase.firestore();
+    get database() {
+        return firebase.database();
     }
     get storage() {
         return firebase.storage();

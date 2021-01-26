@@ -18,17 +18,7 @@ class ChatRoom extends React.Component{
    async componentDidMount() {//faut réfléchir ça
     try {
         this.setState({isLoading:true})
-        const referenceConversations = await Fire.shared.fireStore.collection('conversations').doc(Fire.shared.uid).collection("conversations")
-        this.unsubscribeConversations = referenceConversations.onSnapshot(snapshot=> {
-            if (!snapshot.empty) {
-                const docs = snapshot.docs.map((docSnapshot) => (
-                docSnapshot.data()  ))
-                this.setState({ListMessages:docs})  
-                  
-            } else {
-                console.log("aucun profil récupérée ")
-            }
-         })
+  
          this.setState({isLoading:false})
     } catch (error) {
         alert(error)

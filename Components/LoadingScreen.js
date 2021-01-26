@@ -26,22 +26,34 @@ class LoadingScreen extends Component{
         firebase.auth().onAuthStateChanged(user =>{
           this.props.navigation.navigate(user?"TAB":"Welcome")
           this.getProfile()
+     
             
     })
        
     };
     getProfile= async() => {
         try {
-            const profil = await AsyncStorage.getItem("profile");
+            const profil = await AsyncStorage.getItem("user");
+
             if (profil==null) {
-                let profile= {}
                 const user = Fire.shared.uid
-                const userRef=  Fire.shared.fireStore.collection("users").doc(user)
+                const userRef=  Fire.shared.database.ref("users/"+user)
                 //pour recupere profile
-                this.unsubscribe= userRef.onSnapshot( doc => {
-                this.setState({profile:doc.data() })
+                this.unsubscribe= userRef.on( "value", (snapshot) => {
+                    const profile= {
+                        userName:snapshot.val().userName,
+                        email: snapshot.val().email,
+                        password: snapshot.val().password,
+                        avatar: snapshot.val().avatar,
+                        name: snapshot.val().name,
+                        firstName:snapshot.val().firstName,
+                        age: snapshot.val().age,
+                        gender:snapshot.val().gender,
+                    }
+
+                this.setState({profile:profile})
                 this.saveProfile(this.state.profile) 
-                console.log("Async est null") 
+                
             })} else {
                 console.log("Profile récupéré depuis le async ", JSON.parse(profil))
             }
@@ -53,7 +65,7 @@ class LoadingScreen extends Component{
     }
     saveProfile = async(profile) => {
         try {
-            await AsyncStorage.setItem("profile", JSON.stringify(profile));
+            await AsyncStorage.setItem("user", JSON.stringify(profile));
           } catch (error) {
             alert(error)
           }

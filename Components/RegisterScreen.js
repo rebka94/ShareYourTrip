@@ -55,6 +55,14 @@ class RegisterScreen extends React.Component{
         color={"#fff"}
         style={{marginTop:6, marginLeft:2}}/>
     }
+    onChangeText(text) {
+        let t= this.strUcFirst(text)
+        this.setState({})
+
+    }
+     strUcFirst(a){
+         return (a+'').charAt(0).toUpperCase()+a.substr(0);
+        }
    
     render() {
         console.log("avatar", this.state.user)
@@ -99,7 +107,7 @@ class RegisterScreen extends React.Component{
                         </View>
                         <View style={[styles.panel_form, {marginVertical:40}]}>
                                 <TextInput 
-                                style={styles.input} 
+                                style={styles.input}
                                 autoCapitalize="none" 
                                 placeholder="Prénom"
                                 onChangeText={firstName => this.setState({user:{...this.state.user, firstName}})} 
@@ -131,7 +139,7 @@ class RegisterScreen extends React.Component{
                                 autoCapitalize="none"
                                 maxLength={4}
                                 placeholder="Année de naissance"
-                                onChangeText={birthday => this.setState({user:{...this.state.user, birthday}})}     
+                                onChangeText={age => this.setState({user:{...this.state.user, age}})}     
                                 value={this.state.user.birthday}></TextInput>
                         </View>
                     </View>

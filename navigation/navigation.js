@@ -26,6 +26,7 @@ import BackArrow from './BackArrow';
 import Test1 from "../Components/Tests/Test1"
 import CustomHeaderChatScreen from './CustomHeaderChatScreen';
 import DateTimeModal from '../Components/SYT/DateTimeModal';
+import FriendsScreen from "../Components/FriendsScreen"
  const handleLogOut = () => {
   Alert.alert(
     'Deconnexion',
@@ -226,6 +227,22 @@ function ProfileStack() {
                 
                 name="Settings"
                 component={Test1}
+                options={({ navigation, route, }) => ({
+                  headerShown:false,
+                  ...TransitionPresets.ModalPresentationIOS,
+                  gestureEnabled:true,
+                  cardOverlayEnabled: true,
+                  headerStyle: {
+                    backgroundColor:"transparent"
+                  }, 
+                })}
+                
+                
+            />
+            <AppStack.Screen
+                
+                name="Friends"
+                component={FriendsScreen}
                 options={({ navigation, route, }) => ({
                   headerShown:false,
                   ...TransitionPresets.ModalPresentationIOS,

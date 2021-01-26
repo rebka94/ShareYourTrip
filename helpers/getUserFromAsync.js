@@ -3,7 +3,7 @@ import Fire from "../../SYT/Fire/Fire.js"
 
 export const  getProfile = async () => {
     try {
-        const value = await AsyncStorage.getItem("profile");
+        const value = await AsyncStorage.getItem("user");
         if (value!==null) {
             //we have data 
             console.log('we have data ')

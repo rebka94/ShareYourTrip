@@ -13,6 +13,7 @@ import { Entypo } from '@expo/vector-icons';
 import EscaleForm from "./EscaleForm";
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import Fire from "../../Fire/Fire";
 // create a component
 class EscaleNumbereScreen extends React.Component {
     constructor(props) {
@@ -26,7 +27,11 @@ class EscaleNumbereScreen extends React.Component {
     
    
     componentDidMount() {
+        const refFriends = Fire.shared.database.ref("users/"+Fire.shared.uid).child("dynamicInfo").child("friends").on("value", (snapshot) => {
+            console.log("allo",snapshot.val())
+        })
         this.setState({nbEscales:this.props.nb_stopOver})
+     
    }
   
     render() {

@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 // create a component
 class ProfileScreen extends React.Component{
     constructor(props) {
@@ -16,30 +17,26 @@ class ProfileScreen extends React.Component{
           user: {
 
           },
+          infoUser: {
+            nbFriends:""
+          },
           modalVisible: false
         }
-        this._unsubscribe= null
 
     }
     
     
-     componentDidMount= ()=> 
-     { const {navigation} = this.props
-     this._unsubscribe = navigation.addListener('focus', () => {
-         this.getData()
-         
-       });
+     componentDidMount= ()=> {
+         if (this.props.user!=undefined) {
+            this.setState({user: this.props.user})
+         } else {
+            this.getData()
+         } 
     }
     getData = async() => {
         let data = await functions.getProfile()
         this.setState({user:data})
-        console.log("profil récupérec")
     }
-    componentWillUnmount() {
-        this._unsubscribe();
-
-    }
-   
     handleLogOut() {
         Fire.shared.signOut()
         this.setState({user:{}, modalVisible:false})
@@ -55,158 +52,54 @@ class ProfileScreen extends React.Component{
         { cancelable: false }
     )
 }
-    displayModal() {
-        return (
-            <SafeAreaView style={styles.centeredView}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                }}>
-                    
-                    <SafeAreaView style={[styles.centeredView, {position:"relative"}]}>
-                        <View style={{justifyContent:"center", alignItems:"center",flex:1/10, borderBottomWidth:2, width:"100%", flexDirection:"row"}}>
-                            <View style={{flex:2/10, justifyContent:"center", alignItems:"center"}}>
-                                <TouchableOpacity style={{}}
-                                    onPress={()=>this.setState({modalVisible:false})}>
-                                    <Entypo name="cross" size={35} color="black" />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{flex:8/10, justifyContent:"center", alignItems:"flex-start"}}>
-                                <Text style={{fontSize:25, fontWeight:"bold"}}>{"Réglages"}</Text>
-                            </View>
-                        </View>
-                        <View style={{flex:9/10, }}>
-                        <TouchableOpacity style={{}}
-                                    onPress={()=>this.setState({modalVisible:false})}>
-                                    <Entypo name="cross" size={35} color="black" />
-                                </TouchableOpacity>
-                            <ScrollView style={{flexDirection:"column", marginTop:20}}>
-                                <View style={styles.contain_item}>
-                                    <TouchableOpacity style={styles.items}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialIcons name="account-box" size={35} color="black" style={{marginHorizontal:10}} />
-                                            <Text style={styles.text_item}>{"Compte"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.items}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialCommunityIcons name="shield-lock" size={35} color="black" style={{marginHorizontal:10}}/>
-                                            <Text style={styles.text_item}>{"Sécurité et confidetialité"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.items}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialIcons name="notifications" size={35} color="black" style={{marginHorizontal:10}} />
-                                            <Text style={styles.text_item}>{"Notifications"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[styles.contain_item, {marginTop:45}]}>
-                                    <TouchableOpacity style={styles.items}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialCommunityIcons name="help-box" size={35} color="black" style={{marginHorizontal:10}}/>
-                                            <Text style={styles.text_item}>{"Aide"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.items}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialIcons name="view-list" size={35} color="black" style={{marginHorizontal:10}} />
-                                            <Text style={styles.text_item}>{"Règles de l'application"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.items}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialCommunityIcons name="book-open-variant" size={30} color="black" style={{marginHorizontal:14}}/>
-                                            <Text style={styles.text_item}>{"Légal"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[styles.contain_item, {marginTop:45}]}>
-                                    <TouchableOpacity style={styles.items} onPress={()=>this._showAlert()}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialCommunityIcons name="logout-variant" size={30} color="black" style={{marginHorizontal:14}}/>
-                                            <Text style={styles.text_item}>{"Se déconnecter"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.items}>
-                                        <View style={{flexDirection:"row", alignItems:"center", flex:9/10}}>
-                                            <MaterialCommunityIcons name="delete" size={35} color="black" style={{marginHorizontal:10}}/>
-                                            <Text style={styles.text_item}>{"Supprimer mon compte"}</Text>
-                                        </View>
-                                        <View style={{flex:1/10}}>
-                                            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" style={{alignSelf:"center"}}/>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{justifyContent:"center", alignItems:"center", marginTop:50}}>
-                                    <Text style={styles.text_item}>{"Fait avec amour à Paris"}</Text>
-                                    <Text style={{fontSize:14, fontWeight:"900", color:"grey"}}>{"ShareYourTrip 1.0.0"}</Text>
-                                </View>
-                                
-
-                            </ScrollView>
-                        </View>
-                        
-                       
-                    </SafeAreaView>
-                </Modal>
-            </SafeAreaView>
-        )
-    }
+strUcFirst(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
    
-    render() {   
+    render() {  
+        console.log("la state du profle\n", this.state) 
         return (
        
                 <SafeAreaView style={styles.container}>
-                    {this.displayModal()}
                     <StatusBar barStyle="dark-content" backgroundColor="purple"/>
                 <View style={[styles.up_Screen, {}]}>
-                    <View style={{flex:2/10, justifyContent:"center", alignSelf:"flex-end", marginRight:20, marginTop:15}}>
-                        <TouchableOpacity style={{}} onPress={()=>this.props.navigation.navigate("Settings")}>
+                      {//this.props.user!=undefined&&
+                        <TouchableOpacity style={{right:15, top:5, position:"absolute"}} onPress={()=>this.props.navigation.navigate("Settings")}>
                         <Ionicons 
-                        name= "ios-settings"
-                        size={50}
-                        color={"#4F566D"}
+                            name= "ios-settings"
+                            size={50}
+                            color={"#4F566D"}
                         />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{flex:8/10, justifyContent:"center", alignItems:"center"}}>
+                    </TouchableOpacity>
+                }
+                {
+                    //this.props.user==undefined&&
+                    <TouchableOpacity style={{left:5, top:0, position:"absolute"}} onPress={()=>this.props.navigation.goBack()}>
+                        <MaterialIcons name="keyboard-arrow-down" size={50} color="grey" />
+                    </TouchableOpacity>
+                }
+                    <View style={{justifyContent:"center", alignItems:"center", marginTop:30}}>
                         <View style={styles.avatar_container}>
                             <Image style={styles.avatar} source={this.state.user.avatar? {uri: this.state.user.avatar}: require('../assets/tempAvatar.png')}/>
                         </View>
-                        <Text style={styles.name}>{this.state.user.userName}</Text> 
-
-                    </View>
-                    <TouchableOpacity style={{left:10, top:10, position:"absolute"}} onPress={()=>this.props.navigation.goBack()}>
-                            <MaterialIcons name="keyboard-arrow-down" size={50} color="grey" />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.down_Screen}>
-                    <View style={styles.data_stat}>
+                        <View style={{flexDirection:"row", marginBottom:10}}>
+                            <Text style={styles.name}>{this.state.user.firstName+" "}</Text> 
+                            <Text style={styles.name}>{this.state.user.name+", "}</Text>
+                            <Text style={styles.name}>{this.state.user.age}</Text>
+                        </View>
+                        <View style={{flexDirection:"row",}}>
+                            <TouchableOpacity style={[styles.button, { backgroundColor:"purple",}]}>
+                                <AntDesign name="adduser" size={25} color="#fff" style={{marginRight:5}} />
+                                <Text style={{fontSize:18, fontWeight:"bold", color:"#fff"}}>{"Ajouter"}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, {paddingHorizontal:10, marginLeft:5}]}>
+                                <AntDesign name="message1" size={25} color="#fff" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, {paddingHorizontal:10, marginLeft:5}]}>
+                                <Entypo name="dots-three-vertical" size={25} color="#fff" />   
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.data_stat}>
                         <View style={styles.item}>
                             <Text style={styles.statAmount}>10</Text>
                             <Text style={styles.statTitle}>SYT</Text> 
@@ -215,15 +108,17 @@ class ProfileScreen extends React.Component{
                             <Text style={styles.statAmount}>20</Text>
                             <Text style={styles.statTitle}>Posts</Text> 
                         </View>
-                        <TouchableOpacity onPress={()=> this.props.navigation.navigate("Friends", {avatar: this.state.user.avatar})} style={styles.item}>
-                            <Text style={styles.statAmount}>{this.state.user.friends}</Text>
+                        <TouchableOpacity onPress={()=> this.props.navigation.navigate("Friends")} style={styles.item}>
+                            <Text style={styles.statAmount}>{this.state.infoUser.nbFriends}</Text>
                             <Text style={styles.statTitle}>Amis</Text> 
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{alignItems:"center", height:50, width:"60%", backgroundColor:"red", justifyContent:"center", alignSelf:"center", borderRadius:20, position:"absolute", bottom:20}} onPress={()=>this._showAlert()}>
+                    </View>
+                </View>
+                   
+                    <TouchableOpacity style={{alignItems:"center", paddingVertical:10, paddingHorizontal:30, backgroundColor:"red", justifyContent:"center", alignSelf:"center", borderRadius:20, position:"absolute", bottom:50}} onPress={()=>this._showAlert()}>
                         <Text style={{fontSize:25, fontWeight:"bold", color:"white"}}>Déconnexion</Text>
                     </TouchableOpacity>
-                </View>
             </SafeAreaView>
         );
 
@@ -237,6 +132,14 @@ const styles = StyleSheet.create({
         flex: 1,
 
     },
+    button: {
+        paddingHorizontal:30,
+        paddingVertical:10,
+        flexDirection:"row",
+        justifyContent:"center", alignItems:"center",
+        borderRadius:10,
+        backgroundColor:"#CDB7C6"
+    },
     centeredView: {
         flex: 1,
         justifyContent: 'center',
@@ -244,12 +147,7 @@ const styles = StyleSheet.create({
         position:"absolute",
         backgroundColor:"#E5E7E9"
       },
-    up_Screen: {
-        flex:4/10,
-        justifyContent:"center",
-        alignItems:"center",
-      
-    },
+  
     text_item: {
         fontSize:15,
         fontWeight:"bold"
@@ -259,10 +157,7 @@ const styles = StyleSheet.create({
         borderRadius:15, 
         backgroundColor:"#fff",
     },
-    down_Screen: {
-        flex:6/10
-
-    },
+  
     items: {
         height:50,
         borderBottomWidth:1,
@@ -285,8 +180,8 @@ const styles = StyleSheet.create({
     },
     name: {
         marginTop:32,
-        fontSize:20,
-        fontWeight:"600"
+        fontSize:27,
+        fontWeight:"bold"
     },
     data_stat: {
         flexDirection:"row",

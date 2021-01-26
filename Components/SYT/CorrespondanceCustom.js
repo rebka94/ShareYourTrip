@@ -21,6 +21,7 @@ import EscaleForm from "../EscalesScreens/EscaleForm";
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Escale } from '../../classes/Escale';
+import Fire from '../../Fire/Fire';
 
 
 // create a component
@@ -177,8 +178,8 @@ class CorrespondanceCustom extends React.Component {
             this.setState({nb_correspondance:this.state.nb_correspondance-1,})
         }
     }
+   
     render() {
-        console.log("state", this.state)
         return (
             <Modal
             transparent={true}
